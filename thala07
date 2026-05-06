@@ -43,9 +43,13 @@ MySql In Docker:
  docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql
  sudo docker exec -it  mysql-container mysql -u root -p
 
+Docker Volume:
+docker volume create my_volume
+docker run -d --name mynginx -v my_volume:/usr/share/nginx/html -p 8080:80  nginx
+
 Docker Tag:
  docker tag myapache:latest myapache:v1
  docker rmi myapache:latest>>>>to delete main image
 
 
-bye bye bhai
+
