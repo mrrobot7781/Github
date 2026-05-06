@@ -46,3 +46,6 @@ MySql In Docker:
 Docker Tag:
  docker tag myapache:latest myapache:v1
  docker rmi myapache:latest>>>>to delete main image
+
+
+bye bye bhai
