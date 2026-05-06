@@ -1,0 +1,48 @@
+GitHub:
+-------------
+before git add and commit:
+
+git config --global user.name "username"
+git config --global user.email "user email"
+
+git push origin main
+username>>>>
+password>>>>>give token
+
+To revert Commit Changes:
+git revert --no-commit HEAD~1..HEAD
+
+To go back to specific Commit:
+git reset --hard <0a60ca6>>>commit ID
+
+
+Docker:
+----------
+ vim Dockerfile:
+>>>>> for nginx
+FROM nginx:latest
+COPY . /usr/share/nginx/html
+EXPOSE 80
+
+ docker build -t mynginx .
+docker run -d -p 8081:80 mynginx
+
+>>>>>for Apache2
+FROM ubuntu:latest
+RUN apt update && apt install apache2 -y
+COPY . /var/www/html/
+EXPOSE 80
+CMD ["apachectl", "-D", "FOREGROUND"]
+     
+ vim index.html
+
+ docker build -t myapache .
+docker run -d -p 8082:80 myapache
+
+MySql In Docker:
+ docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql
+ sudo docker exec -it  mysql-container mysql -u root -p
+
+Docker Tag:
+ docker tag myapache:latest myapache:v1
+ docker rmi myapache:latest>>>>to delete main image
