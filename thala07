@@ -55,3 +55,6 @@ Docker Tag:
 
 For java :
 FROM eclipse-temurin:17-jdk-alpine
+
+docker run -d -p 8083:80 --name nginx-server3 -v $(pwd):/usr/share/nginx/html nginx
+
