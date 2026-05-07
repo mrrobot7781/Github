@@ -53,3 +53,5 @@ Docker Tag:
 
 
 
+For java :
+FROM eclipse-temurin:17-jdk-alpine
