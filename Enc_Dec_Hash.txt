@@ -1,0 +1,44 @@
+Encryption – Decryption “Symmetric Key”
+openssl enc -des-ede3-cbc -in test.txt -out cipher.txt 
+openssl enc -d -des-ede3-cbc -in cipher.txt -out decrypted.txt
+
+Encryption – Decryption “Asymmetric Key”
+openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
+openssl pkey -in private.pem -pubout -out public.pem
+openssl pkeyutl -encrypt -inkey public.pem -pubin -in plain.txt -out cipher.txt
+openssl pkeyutl -decrypt -inkey private.pem -in cipher.txt -out decrypted.txt
+
+Hashing
+openssl dgst -sha256 -out hash1 myfile.txt
+
+Create a  digital signature
+
+openssl genpkey -algorithm RSA -out private.pem
+openssl pkey -in private.pem -pubout -out public.pem
+openssl dgst -sha256 -sign private.pem -out file1.sig file1.txt
+openssl dgst -sha256 -verify public.pem -signature file1.sig file1.txt
+
+Hashing :
+openssl dgst -sha256 message.txt
+openssl dgst -sha256 message.txt > message.txt.sha256
+openssl dgst -sha256 -verify message.txt.sha256 message.txt
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Sign & Verify :
+openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -pubout -out public.pem
+openssl dgst -sha256 -sign private.pem -out message.txt.sig message.txt
+openssl dgst -sha256 -verify public.pem -signature message.txt.sig message.txt
+
+MD5 HASH:
+
+MD5 HASH:
+
+1)md5sum msg.txt
+2)md5sum msg.txt > msg.md5
+3)md5sum -c msg.md5
+
+Now,change some text in msg.txt
+And again check
+4)md5sum -c msg.md5—--> the checksum will not match now
+
