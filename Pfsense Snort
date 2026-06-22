@@ -1,0 +1,6 @@
+PFSENSE SNORT:
+
+alert udp any 68 -> any 67 (msg:"kali linux detected";content:"kali";nocase;sid:1000001;)
+alert tcp any any -> any any (msg:"Possible NMAP port scan";detection_filter:track by_src,count 20,seconds 60;sid:1000002;)
+alert icmp any any -> any any (msg:"Large ping Packets detected";dsize:>128;sid:1000003;)
+alert icmp any any -> any any (msg:"flooding detected";detection_filter: track by_src,count 30,seconds 60;sid:1000004)
