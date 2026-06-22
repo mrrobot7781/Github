@@ -1,0 +1,35 @@
+
+Snort :-
+
+cd  /etc/snort
+Sudo vim snort.conf
+ --> 	ipvar HOME_NET 192.168.35.0/24------>ip of snort running machine
+ --> 	ipvar EXTERNAL_NET !$HOME_NET
+ -->	var RULE_PATH /etc/snort/rules
+ -->	var SO_RULE_PATH /etc/snort/so_rules
+ -->	var PREPROC_RULE_PATH /etc/snort/preproc_rules
+ -->	var WHITE_LIST_PATH /etc/snort/rules
+ -->	var BLACK_LIST_PATH /etc/snort/rules
+
+(make sure to enable this in file)
+
+Cd  /etc/snort/rules
+Sudo vim local.rules
+
+alert icmp any any -> any any (msg:"Test ping";sid:1000013;)
+alert udp any any -> any 53 (msg:”LAN searching facebook”;content:”facebook”;nocase;sid:952145;)
+alert tcp $EXTERNAL_NET any -> 192.168.74.227 22 (msg:"Test SSH";sid:1000003;)
+alert icmp any any -> 192.168.74.227 any (msg:"Test big_data ping";dsize:>128;sid:1000004;)
+alert icmp any any -> 192.168.74.227 any (msg:"Ping of Death";detection_filter:track by_src,count 20,seconds 60;sid:1000044;)
+alert tcp any any -> 192.168.74.227 80 (msg:"flood web flow";flags:S;detection_filter:track by_src,count 20,seconds 60;sid:1000033;)
+
+
+For log generation perform activities based on rules applied and you will get the logs........................
+
+for logs :-
+sudo snort -A console -i ens160 -c /etc/snort/snort.conf -l /var/log/snort/—---->>> l is small L
+				(OR)
+sudo cat /var/log/snort/alert.fast
+
+
+
