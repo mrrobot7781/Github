@@ -5,6 +5,11 @@ sudo yum install nginx -y----->centos
 
 sudo apt install nginx----> for ubuntu
 
+sudo systemctl start nginx -------> if error is showing, then stop and disable the httpd/apache2 service
+sudo systemctl enable nginx
+sudo systemctl status nginx
+
+
 NGINX:
 
 NOTE: set iptables before (remove REJECT rule from FORWARD and add MASQUERADE in NAT POSTROUTING)
