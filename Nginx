@@ -1,0 +1,81 @@
+Installation:
+
+sudo yum install epel-release -y----->centoos
+sudo yum install nginx -y----->centos
+
+sudo apt install nginx----> for ubuntu
+
+NGINX:
+
+NOTE: set iptables before (remove REJECT rule from FORWARD and add MASQUERADE in NAT POSTROUTING)
+
+Sudo setenforce 0
+
+Sudo apt install nginx----> for ubuntu
+Sudo systemctl status nginx
+
+Cd /etc/nginx/
+Sudo vim nginx.conf
+
+ 41     server {
+ 42         listen       80;
+ 43         #listen       [::]:80;
+ 44         #server_name  _;
+ 45         #root         /usr/share/nginx/html;
+
+
+
+# Load Balancer
+Accord Line 37 
+ upstream backend {
+          server 192.168.35.10;
+          server 192.168.25.20 weight 5;
+      }
+ 	location / {
+               	 	 proxy_pass http://backend/;
+         	}
+
+# for different pages
+Accord Line 58 for 
+
+              location / {
+               	 	 proxy_pass http://192.168.25.20/;
+         	}
+ 
+         location /cdac{
+                 	proxy_pass http://192.168.35.10/;
+         	}
+ 
+Browser:	192.168.74.227/
+Browser:	192.168.74.227/cdac
+
+Note: ON client web server should be run
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+nginx Loadbalancing + Reverse Proxy :-
+
+ Loadbalancing
+
+ 36     include /etc/nginx/conf.d/*.conf;
+ 37     upstream batman {
+ 38         server 192.168.25.10;
+ 39         server 192.168.25.20;
+ 40     }
+ 41     server {
+ 42         listen       80;
+ 43 #        listen       [::]:80;
+ 44 #        server_name  _;
+ 45 #        root         /usr/share/nginx/html;
+ 46 
+ 47         # Load configuration files for the default server block.
+ 48         include /etc/nginx/default.d/*.conf;
+ 49 
+ 50         error_page 404 /404.html;
+ 51         location = /404.html {
+ 52         }
+ 53         location = / {
+ 54                 proxy_pass http://batman/;
+ 55         }
+ 56         location = /cdac {
+ 57                 proxy_pass http://192.168.25.10/;
