@@ -1,0 +1,47 @@
+402 Q3. OpenVPN Full Tunnel
+
+403 Commands
+
+{
+
+404 apt install openvpn easy-rsa -y
+
+405 Does: Installs OpenVPN.
+
+406 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf 407 sysctl -p
+
+408 Does: Enables routing through VPN server.
+
+409 Server Configuration
+
+410 push "redirect-gateway def1 bypass-dhcp"
+
+411 Does: Sends all client internet traffic through VPN.
+
+412 push "dhcp-option DNS 8.8.8.8"
+
+413 push "dhcp-option DNS 8.8.4.4"
+
+414 Does: Pushes DNS settings to clients.
+
+415 compress lz4
+
+416 push "compress 1z4"
+
+417 Does: Enables VPN compression.
+
+418 NAT
+
+419 iptables -t nat -A POSTROUTING \
+
+420 -s 10.8.0.0/24 -o etho \
+
+421 -j MASQUERADE
+
+422 Does: Allows VPN clients to access the Internet.
+
+423 Start Service
+
+424 systemctl start openvpn-server@server 425 systemctl enable openvpn-server@server
+
+426 Does: Starts OpenVPN automatically.
