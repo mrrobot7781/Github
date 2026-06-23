@@ -31,5 +31,17 @@ sudo snort -A console -i ens160 -c /etc/snort/snort.conf -l /var/log/snort/—--
 				(OR)
 sudo cat /var/log/snort/alert.fast
 
+Attacking Commands:
+1.ping 192.168.74.227
+2.nslookup facebook.com 192.168.74.227--------------your snort ip
+3.ssh user@192.168.74.227-----------your snort ip
+4.ping -s 200 192.168.74.227--------your snort ip
+5.ping -c 25 192.168.74.227---------your snort ip
+
+
+KALI
+sudo hping3 -1 -d 256 <ip>
+sudo hydra -L users.txt -P pass.txt ssh://<ip>
+
 
 
