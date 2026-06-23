@@ -1,0 +1,23 @@
+Ipset
+========
+Chai 
+
+Sudo yum install ipset -y
+Sudo ipset list
+
+ipset create chai hash:ip timeout 60
+Ipset add chai 192.168.xx.xx------>the IP you want to Block
+
+iptables -I INPUT 1 -m set --match-set chai src -j DROP 
+iptables -I INPUT 2 -p icmp --icmp-type echo-request -j SET --add-set chai src 
+iptables -I INPUT 3 -p tcp --dport=22 -j SET --add-set chai src 
+iptables -I INPUT 4 -p tcp --dport=80 -j SET --add-set chai src 
+
+iptables -I INPUT 2 -p icmp --icmp-type echo-request -m length --length 156: -j SET --add-set chai src
+
+iptables -I INPUT 2 -p icmp --icmp-type echo-request -m limit --limit 10/s -j SET --add-set chai src
+
+ipset del chai 192.168.74.74
+
+iptables -D INPUT 1
+iptables destroy chai
